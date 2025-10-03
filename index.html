@@ -94,22 +94,6 @@
       background-color: #0056b3;
     }
 
-    .main-info-container {
-      width: 80%;
-      max-width: 800px;
-      margin-bottom: 40px;
-    }
-
-    .main-info-container h2 {
-      font-size: 26px;
-      margin-bottom: 10px;
-    }
-
-    .main-info-container p {
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
-
   </style>
 </head>
 <body>
@@ -119,87 +103,70 @@
   </header>
 
   <div class="container" id="content-container">
-
-    <!-- Основная информация о сайте -->
-    <div class="main-info-container" id="main-info-container">
-      <h2 contenteditable="true" id="main-info-title">Основная информация о сайте</h2>
-      <p contenteditable="true" id="main-info-text">Здесь будет основная информация о сайте. Вы можете редактировать этот текст прямо на странице.</p>
-      <button class="edit-btn" onclick="saveMainInfo()">Сохранить информацию</button>
-    </div>
-
-    <!-- Список блоков информации -->
-    <div id="blocks-list">
-      <!-- Блоки будут динамически добавляться сюда -->
-    </div>
-
-    <button class="add-block-btn" onclick="addNewBlock()">Добавить новый блок</button>
-
+    <!-- Список блоков будет загружаться сюда -->
   </div>
 
+  <button class="add-block-btn" onclick="addNewBlock()">Добавить новый блок</button>
+
   <script>
-    // Функции для работы с основной информацией
-    function saveMainInfo() {
-      const title = document.getElementById("main-info-title").innerText;
-      const text = document.getElementById("main-info-text").innerText;
-      
-      // Сохраняем в localStorage
-      localStorage.setItem("mainInfoTitle", title);
-      localStorage.setItem("mainInfoText", text);
-    }
-
-    function loadMainInfo() {
-      const title = localStorage.getItem("mainInfoTitle");
-      const text = localStorage.getItem("mainInfoText");
-
-      if (title && text) {
-        document.getElementById("main-info-title").innerText = title;
-        document.getElementById("main-info-text").innerText = text;
-      }
-    }
-
-    // Функции для работы с блоками
     let blockCounter = 0;
 
-    function addNewBlock() {
-      blockCounter++; // Увеличиваем счётчик блоков
+    // Загрузка блоков из localStorage
+    function loadBlocks() {
+      const blocks = JSON.parse(localStorage.getItem('blocks')) || [];
 
-      const container = document.getElementById('blocks-list');
+      blocks.forEach(block => {
+        createBlock(block.title, block.text, block.imageSrc);
+      });
+    }
 
-      // Создаём новый блок
+    // Сохранение блоков в localStorage
+    function saveBlocks() {
+      const blocks = [];
+      document.querySelectorAll('.content-block').forEach(blockElement => {
+        const block = {
+          title: blockElement.querySelector('h2').innerText,
+          text: blockElement.querySelector('p').innerText,
+          imageSrc: blockElement.querySelector('img') ? blockElement.querySelector('img').src : ''
+        };
+        blocks.push(block);
+      });
+
+      localStorage.setItem('blocks', JSON.stringify(blocks));
+    }
+
+    // Функция для создания нового блока
+    function createBlock(title = 'Заголовок блока', text = 'Текст для блока.', imageSrc = '') {
+      blockCounter++;
+
+      const container = document.getElementById('content-container');
+
       const block = document.createElement('div');
       block.classList.add('content-block');
       block.id = 'block' + blockCounter;
 
       block.innerHTML = `
-        <h2 id="block${blockCounter}-title" contenteditable="true">Заголовок блока ${blockCounter}</h2>
-        <p id="block${blockCounter}-text" contenteditable="true">Текст для блока ${blockCounter}. Редактируйте этот текст.</p>
-        <button class="edit-btn" onclick="editContent('block${blockCounter}')">Редактировать</button>
-        
+        <h2 contenteditable="true">${title}</h2>
+        <p contenteditable="true">${text}</p>
+        <button class="edit-btn" onclick="saveBlocks()">Сохранить изменения</button>
         <div class="image-upload">
-          <h3>Добавить изображение для блока ${blockCounter}</h3>
-          <input type="file" id="block${blockCounter}-image-input" accept="image/*" onchange="previewImage(event, 'block${blockCounter}')">
-          <img id="block${blockCounter}-image-preview" class="image-preview" style="display:none;">
+          <h3>Добавить изображение</h3>
+          <input type="file" accept="image/*" onchange="previewImage(event, 'block${blockCounter}')">
+          ${imageSrc ? `<img src="${imageSrc}" class="image-preview">` : ''}
         </div>
       `;
 
       container.appendChild(block);
-    }
 
-    function editContent(blockId) {
-      const title = document.getElementById(blockId + '-title');
-      const text = document.getElementById(blockId + '-text');
-
-      const newTitle = prompt("Введите новый заголовок", title.innerText);
-      const newText = prompt("Введите новый текст", text.innerText);
-
-      if (newTitle !== null && newText !== null) {
-        title.innerText = newTitle;
-        text.innerText = newText;
+      // Если изображение было загружено, показываем его
+      if (imageSrc) {
+        block.querySelector('img').style.display = 'block';
       }
     }
 
+    // Функция для предварительного просмотра изображения
     function previewImage(event, blockId) {
-      const preview = document.getElementById(blockId + '-image-preview');
+      const preview = document.getElementById(blockId).querySelector('img');
       const file = event.target.files[0];
 
       if (file) {
@@ -208,16 +175,21 @@
         reader.onload = function() {
           preview.src = reader.result;
           preview.style.display = 'block';
+          saveBlocks(); // Сохранение данных после загрузки изображения
         }
 
         reader.readAsDataURL(file);
       }
     }
 
-    // Загрузка данных из localStorage при старте страницы
-    window.onload = function() {
-      loadMainInfo();
+    // Функция для добавления нового блока
+    function addNewBlock() {
+      createBlock();
+      saveBlocks(); // Сохраняем блок в localStorage сразу после добавления
     }
+
+    // Загружаем блоки при старте страницы
+    window.onload = loadBlocks;
   </script>
 
 </body>
