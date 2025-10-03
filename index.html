@@ -5,78 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Динамический сайт с редактируемыми блоками</title>
   <style>
+    /* Общие стили */
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f7fb;
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
       margin: 0;
       padding: 0;
+      color: #333;
     }
 
     header {
-      background-color: #4CAF50;
+      background-color: #007BFF;
       padding: 20px;
       color: white;
       text-align: center;
-      font-size: 24px;
+      font-size: 28px;
+      border-bottom: 4px solid #0056b3;
     }
 
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin: 20px;
+      margin: 30px auto;
+      max-width: 1000px;
+      width: 90%;
     }
 
+    /* Стиль блока с основной информацией */
+    .main-info-container {
+      background-color: white;
+      padding: 30px;
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+    }
+
+    .main-info-container h2 {
+      font-size: 24px;
+      color: #007BFF;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .main-info-container p {
+      font-size: 18px;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 20px;
+      text-align: justify;
+    }
+
+    /* Стили для добавления блоков */
     .content-block {
-      background-color: #fff;
-      width: 80%;
+      background-color: #ffffff;
+      width: 100%;
       max-width: 800px;
       padding: 20px;
       margin-bottom: 20px;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .content-block:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     }
 
     .content-block h2 {
-      margin-bottom: 10px;
       font-size: 22px;
-      cursor: pointer;
+      color: #333;
+      margin-bottom: 10px;
+      cursor: text;
+      font-weight: 600;
     }
 
     .content-block p {
       font-size: 16px;
+      color: #666;
       line-height: 1.6;
-      cursor: pointer;
+      margin-bottom: 20px;
+      cursor: text;
     }
 
     .edit-btn {
-      background-color: #4CAF50;
+      background-color: #28a745;
       color: white;
       border: none;
       padding: 10px 20px;
       cursor: pointer;
       border-radius: 5px;
       font-size: 16px;
-      margin-top: 10px;
+      transition: background-color 0.3s ease;
     }
 
     .edit-btn:hover {
-      background-color: #45a049;
-    }
-
-    .image-upload {
-      margin-top: 20px;
-    }
-
-    input[type="file"] {
-      padding: 5px;
-    }
-
-    .image-preview {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin-top: 10px;
+      background-color: #218838;
     }
 
     .add-block-btn {
@@ -87,11 +114,34 @@
       border-radius: 5px;
       margin-top: 30px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s ease;
     }
 
     .add-block-btn:hover {
       background-color: #0056b3;
+    }
+
+    /* Стиль для добавления изображения */
+    .image-upload {
+      margin-top: 20px;
+    }
+
+    .image-upload h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    input[type="file"] {
+      padding: 5px;
+      font-size: 16px;
+    }
+
+    .image-preview {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      margin-top: 15px;
+      border-radius: 8px;
     }
 
   </style>
@@ -103,10 +153,23 @@
   </header>
 
   <div class="container" id="content-container">
-    <!-- Список блоков будет загружаться сюда -->
-  </div>
+    
+    <!-- Основная информация -->
+    <div class="main-info-container" id="main-info-container">
+      <h2 contenteditable="true" id="main-info-title">Основная информация о сайте</h2>
+      <p contenteditable="true" id="main-info-text">Здесь будет основная информация о сайте. Вы можете редактировать этот текст прямо на странице.</p>
+      <button class="edit-btn" onclick="saveMainInfo()">Сохранить изменения</button>
+    </div>
 
-  <button class="add-block-btn" onclick="addNewBlock()">Добавить новый блок</button>
+    <!-- Список блоков -->
+    <div id="blocks-list">
+      <!-- Блоки будут загружаться сюда -->
+    </div>
+
+    <!-- Кнопка добавления блоков -->
+    <button class="add-block-btn" onclick="addNewBlock()">Добавить новый блок</button>
+
+  </div>
 
   <script>
     let blockCounter = 0;
@@ -139,7 +202,7 @@
     function createBlock(title = 'Заголовок блока', text = 'Текст для блока.', imageSrc = '') {
       blockCounter++;
 
-      const container = document.getElementById('content-container');
+      const container = document.getElementById('blocks-list');
 
       const block = document.createElement('div');
       block.classList.add('content-block');
@@ -188,9 +251,19 @@
       saveBlocks(); // Сохраняем блок в localStorage сразу после добавления
     }
 
-    // Загружаем блоки при старте страницы
-    window.onload = loadBlocks;
-  </script>
+    // Сохранение основной информации
+    function saveMainInfo() {
+      const title = document.getElementById("main-info-title").innerText;
+      const text = document.getElementById("main-info-text").innerText;
+      
+      // Сохраняем в localStorage
+      localStorage.setItem("mainInfoTitle", title);
+      localStorage.setItem("mainInfoText", text);
+    }
 
-</body>
-</html>
+    // Загрузка основной информации из localStorage
+    function loadMainInfo() {
+      const title = localStorage.getItem("mainInfoTitle");
+      const text = localStorage.getItem("mainInfoText");
+
+     
