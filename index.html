@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Динамический сайт с многими блоками</title>
+  <title>Динамический сайт с редактируемыми блоками</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -94,6 +94,22 @@
       background-color: #0056b3;
     }
 
+    .main-info-container {
+      width: 80%;
+      max-width: 800px;
+      margin-bottom: 40px;
+    }
+
+    .main-info-container h2 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .main-info-container p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
   </style>
 </head>
 <body>
@@ -104,16 +120,71 @@
 
   <div class="container" id="content-container">
 
-    <!-- Место для динамических блоков -->
-    
+    <!-- Основная информация о сайте -->
+    <div class="main-info-container" id="main-info-container">
+      <h2 contenteditable="true" id="main-info-title">Основная информация о сайте</h2>
+      <p contenteditable="true" id="main-info-text">Здесь будет основная информация о сайте. Вы можете редактировать этот текст прямо на странице.</p>
+      <button class="edit-btn" onclick="saveMainInfo()">Сохранить информацию</button>
+    </div>
+
+    <!-- Список блоков информации -->
+    <div id="blocks-list">
+      <!-- Блоки будут динамически добавляться сюда -->
+    </div>
+
+    <button class="add-block-btn" onclick="addNewBlock()">Добавить новый блок</button>
+
   </div>
 
-  <button class="add-block-btn" onclick="addNewBlock()">Добавить новый блок</button>
-
   <script>
-    let blockCounter = 0; // Счётчик блоков
+    // Функции для работы с основной информацией
+    function saveMainInfo() {
+      const title = document.getElementById("main-info-title").innerText;
+      const text = document.getElementById("main-info-text").innerText;
+      
+      // Сохраняем в localStorage
+      localStorage.setItem("mainInfoTitle", title);
+      localStorage.setItem("mainInfoText", text);
+    }
 
-    // Функция для редактирования текста
+    function loadMainInfo() {
+      const title = localStorage.getItem("mainInfoTitle");
+      const text = localStorage.getItem("mainInfoText");
+
+      if (title && text) {
+        document.getElementById("main-info-title").innerText = title;
+        document.getElementById("main-info-text").innerText = text;
+      }
+    }
+
+    // Функции для работы с блоками
+    let blockCounter = 0;
+
+    function addNewBlock() {
+      blockCounter++; // Увеличиваем счётчик блоков
+
+      const container = document.getElementById('blocks-list');
+
+      // Создаём новый блок
+      const block = document.createElement('div');
+      block.classList.add('content-block');
+      block.id = 'block' + blockCounter;
+
+      block.innerHTML = `
+        <h2 id="block${blockCounter}-title" contenteditable="true">Заголовок блока ${blockCounter}</h2>
+        <p id="block${blockCounter}-text" contenteditable="true">Текст для блока ${blockCounter}. Редактируйте этот текст.</p>
+        <button class="edit-btn" onclick="editContent('block${blockCounter}')">Редактировать</button>
+        
+        <div class="image-upload">
+          <h3>Добавить изображение для блока ${blockCounter}</h3>
+          <input type="file" id="block${blockCounter}-image-input" accept="image/*" onchange="previewImage(event, 'block${blockCounter}')">
+          <img id="block${blockCounter}-image-preview" class="image-preview" style="display:none;">
+        </div>
+      `;
+
+      container.appendChild(block);
+    }
+
     function editContent(blockId) {
       const title = document.getElementById(blockId + '-title');
       const text = document.getElementById(blockId + '-text');
@@ -127,7 +198,6 @@
       }
     }
 
-    // Функция для загрузки изображения
     function previewImage(event, blockId) {
       const preview = document.getElementById(blockId + '-image-preview');
       const file = event.target.files[0];
@@ -144,31 +214,9 @@
       }
     }
 
-    // Функция для добавления нового блока
-    function addNewBlock() {
-      blockCounter++; // Увеличиваем счётчик блоков
-
-      const container = document.getElementById('content-container');
-
-      // Создаём новый блок
-      const block = document.createElement('div');
-      block.classList.add('content-block');
-      block.id = 'block' + blockCounter;
-
-      // Вставляем блок в контейнер
-      block.innerHTML = `
-        <h2 id="block${blockCounter}-title" contenteditable="true">Заголовок блока ${blockCounter}</h2>
-        <p id="block${blockCounter}-text" contenteditable="true">Текст для блока ${blockCounter}. Редактируйте этот текст.</p>
-        <button class="edit-btn" onclick="editContent('block${blockCounter}')">Редактировать</button>
-        
-        <div class="image-upload">
-          <h3>Добавить изображение для блока ${blockCounter}</h3>
-          <input type="file" id="block${blockCounter}-image-input" accept="image/*" onchange="previewImage(event, 'block${blockCounter}')">
-          <img id="block${blockCounter}-image-preview" class="image-preview" style="display:none;">
-        </div>
-      `;
-
-      container.appendChild(block);
+    // Загрузка данных из localStorage при старте страницы
+    window.onload = function() {
+      loadMainInfo();
     }
   </script>
 
