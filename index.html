@@ -4,56 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Советник директора и учитель - Веб-сайт</title>
+    <title>Советник директора и учитель</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Основные стили */
         body {
             font-family: 'Open Sans', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f7f8;
+            background-color: #f5f5f5;
             color: #333;
         }
 
         header {
-            background-color: #283593;
+            background-color: #2c3e50;
             color: white;
             text-align: center;
-            padding: 20px 0;
-            font-size: 28px;
+            padding: 30px;
+            font-size: 36px;
+            font-weight: 700;
         }
 
-        /* Навигация */
         nav {
+            background-color: #34495e;
             display: flex;
             justify-content: center;
-            background-color: #3f51b5;
-            padding: 10px 0;
+            padding: 10px;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            padding: 12px 20px;
             font-size: 18px;
+            padding: 12px 20px;
+            transition: background-color 0.3s ease;
             margin: 0 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
         }
 
         nav a:hover {
-            background-color: #303f9f;
+            background-color: #1abc9c;
         }
 
-        /* Секция с приветствием */
         .hero {
-            background-image: url('https://via.placeholder.com/1500x800'); /* Замените на свою картинку */
+            background-image: url('https://via.placeholder.com/1600x600');
             background-size: cover;
             background-position: center;
-            color: white;
-            padding: 100px 0;
             text-align: center;
+            padding: 120px 0;
+            color: white;
         }
 
         .hero h2 {
@@ -65,37 +62,30 @@
             font-size: 22px;
         }
 
-        /* О себе */
-        .about {
-            background-color: #ffffff;
-            padding: 50px;
-            margin: 40px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .content {
+            margin: 40px auto;
+            max-width: 1100px;
+            padding: 20px;
         }
 
-        .about h2 {
+        .section-title {
             font-size: 36px;
-            color: #283593;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .section-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .about p {
             font-size: 18px;
             line-height: 1.8;
             color: #555;
-        }
-
-        /* Мои обязанности */
-        .duties {
-            background-color: #eeeeee;
-            padding: 50px;
-            margin: 40px 0;
-        }
-
-        .duties h2 {
-            font-size: 36px;
-            color: #283593;
-            text-align: center;
         }
 
         .duties ul {
@@ -105,25 +95,23 @@
 
         .duties ul li {
             font-size: 18px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            color: #555;
         }
 
-        /* Галерея */
         .gallery {
-            padding: 50px;
-            text-align: center;
-        }
-
-        .gallery h2 {
-            font-size: 36px;
-            color: #283593;
-            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
         }
 
         .gallery img {
             width: 30%;
-            margin: 10px;
+            height: auto;
             border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
         }
 
@@ -131,64 +119,57 @@
             transform: scale(1.05);
         }
 
-        /* Контакты */
-        .contact {
-            background-color: #ffffff;
-            padding: 50px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 40px 0;
-            border-radius: 8px;
-        }
-
-        .contact h2 {
-            font-size: 36px;
-            color: #283593;
-            text-align: center;
-        }
-
-        .contact form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .contact input, .contact textarea {
-            width: 60%;
+        .contact-form input, .contact-form textarea {
+            width: 80%;
             padding: 10px;
             margin: 10px 0;
-            border: 2px solid #ccc;
+            border: 2px solid #ddd;
             border-radius: 5px;
             font-size: 16px;
         }
 
-        .contact button {
-            background-color: #3f51b5;
+        .contact-form button {
+            background-color: #1abc9c;
             color: white;
-            border: none;
             padding: 15px 30px;
             font-size: 18px;
-            cursor: pointer;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .contact-form button:hover {
+            background-color: #16a085;
+        }
+
+        .add-content-btn {
+            background-color: #2980b9;
+            color: white;
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .contact button:hover {
-            background-color: #303f9f;
+        .add-content-btn:hover {
+            background-color: #1c6ea4;
         }
 
         footer {
-            background-color: #283593;
+            background-color: #2c3e50;
             color: white;
-            padding: 20px;
             text-align: center;
+            padding: 20px;
         }
-
     </style>
 </head>
 <body>
 
 <header>
-    Советы и Обучение: Советы директора и учителя
+    Советник директора и учитель
 </header>
 
 <nav>
@@ -198,52 +179,82 @@
     <a href="#contact">Контакты</a>
 </nav>
 
-<!-- Секция с приветствием -->
 <div class="hero">
-    <h2>Приветствую вас на моем сайте</h2>
-    <p>Я советник директора и учитель, и здесь я делюсь своей деятельностью и достижениями.</p>
+    <h2>Добро пожаловать на мой сайт!</h2>
+    <p>Здесь я рассказываю о своей работе и делюсь материалами для учеников и коллег.</p>
 </div>
 
-<!-- О себе -->
-<div id="about" class="about">
-    <h2>О себе</h2>
-    <p>Меня зовут Иван Иванович, я работаю в образовательной сфере более 10 лет. Моей целью является не только передача знаний, но и воспитание личностей, готовых к жизни в современном обществе. В своей работе я уделяю особое внимание каждому ученику, стремясь создать комфортную атмосферу для их роста и развития.</p>
+<div class="content" id="about">
+    <h2 class="section-title">О себе</h2>
+    <div class="section-content about">
+        <p>Меня зовут Иван Иванович. Я работаю в образовании уже более 15 лет. Моя цель — помочь ученикам найти свой путь в жизни, поддерживать их в трудные моменты и направлять на путь знания.</p>
+        <button class="add-content-btn" onclick="addContent('about')">Добавить информацию</button>
+    </div>
 </div>
 
-<!-- Мои обязанности -->
-<div id="duties" class="duties">
-    <h2>Мои обязанности</h2>
-    <ul>
-        <li>Консультирование директора по вопросам управления образовательным процессом.</li>
-        <li>Планирование и проведение образовательных мероприятий для учащихся.</li>
-        <li>Организация и координация работы педагогического коллектива.</li>
-        <li>Разработка и внедрение новых образовательных программ и курсов.</li>
-        <li>Проведение уроков по предмету "Математика" для старших классов.</li>
-    </ul>
+<div class="content" id="duties">
+    <h2 class="section-title">Мои обязанности</h2>
+    <div class="section-content duties">
+        <ul>
+            <li>Консультирование и помощь директору по вопросам управления учебным процессом.</li>
+            <li>Организация мероприятий и уроков для учащихся.</li>
+            <li>Разработка и внедрение учебных программ.</li>
+        </ul>
+        <button class="add-content-btn" onclick="addContent('duties')">Добавить обязанности</button>
+    </div>
 </div>
 
-<!-- Галерея -->
-<div id="gallery" class="gallery">
-    <h2>Фото и видео</h2>
-    <img src="https://via.placeholder.com/400x300" alt="Фото 1">
-    <img src="https://via.placeholder.com/400x300" alt="Фото 2">
-    <img src="https://via.placeholder.com/400x300" alt="Фото 3">
+<div class="content" id="gallery">
+    <h2 class="section-title">Галерея</h2>
+    <div class="section-content">
+        <div class="gallery" id="image-gallery">
+            <!-- Здесь будут добавляться фотографии -->
+        </div>
+        <button class="add-content-btn" onclick="addImage()">Добавить фото</button>
+    </div>
 </div>
 
-<!-- Контакты -->
-<div id="contact" class="contact">
-    <h2>Контакты</h2>
-    <form action="#">
-        <input type="text" name="name" placeholder="Ваше имя" required>
-        <input type="email" name="email" placeholder="Ваш email" required>
-        <textarea name="message" placeholder="Ваше сообщение" rows="5" required></textarea>
-        <button type="submit">Отправить сообщение</button>
-    </form>
+<div class="content" id="contact">
+    <h2 class="section-title">Контакты</h2>
+    <div class="section-content contact-form">
+        <form>
+            <input type="text" placeholder="Ваше имя" required>
+            <input type="email" placeholder="Ваш email" required>
+            <textarea placeholder="Ваше сообщение" rows="4" required></textarea>
+            <button type="submit">Отправить сообщение</button>
+        </form>
+    </div>
 </div>
 
 <footer>
-    <p>&copy; 2025 Все права защищены. Советы и Обучение</p>
+    <p>&copy; 2025 Иван Иванович — Все права защищены</p>
 </footer>
+
+<script>
+    // Функция для добавления контента в разделы
+    function addContent(section) {
+        const content = prompt("Введите информацию для добавления:");
+        if (content) {
+            const sectionElement = document.querySelector(`#${section} .section-content`);
+            const newContent = document.createElement('p');
+            newContent.innerText = content;
+            sectionElement.appendChild(newContent);
+        }
+    }
+
+    // Функция для добавления изображений в галерею
+    function addImage() {
+        const imageUrl = prompt("Введите URL изображения:");
+        if (imageUrl) {
+            const gallery = document.getElementById("image-gallery");
+            const newImage = document.createElement("img");
+            newImage.src = imageUrl;
+            newImage.alt = "New Image";
+            gallery.appendChild(newImage);
+        }
+    }
+</script>
 
 </body>
 </html>
+
