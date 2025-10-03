@@ -186,29 +186,25 @@
 
 <div class="content" id="about">
     <h2 class="section-title">О себе</h2>
-    <div class="section-content about">
-        <p>Меня зовут Иван Иванович. Я работаю в образовании уже более 15 лет. Моя цель — помочь ученикам найти свой путь в жизни, поддерживать их в трудные моменты и направлять на путь знания.</p>
-        <button class="add-content-btn" onclick="addContent('about')">Добавить информацию</button>
+    <div class="section-content about" id="about-content">
+        <!-- Контент добавляется через JavaScript -->
     </div>
+    <button class="add-content-btn" onclick="addContent('about')">Добавить информацию</button>
 </div>
 
 <div class="content" id="duties">
     <h2 class="section-title">Мои обязанности</h2>
-    <div class="section-content duties">
-        <ul>
-            <li>Консультирование и помощь директору по вопросам управления учебным процессом.</li>
-            <li>Организация мероприятий и уроков для учащихся.</li>
-            <li>Разработка и внедрение учебных программ.</li>
-        </ul>
-        <button class="add-content-btn" onclick="addContent('duties')">Добавить обязанности</button>
+    <div class="section-content duties" id="duties-content">
+        <!-- Контент добавляется через JavaScript -->
     </div>
+    <button class="add-content-btn" onclick="addContent('duties')">Добавить обязанности</button>
 </div>
 
 <div class="content" id="gallery">
     <h2 class="section-title">Галерея</h2>
     <div class="section-content">
         <div class="gallery" id="image-gallery">
-            <!-- Здесь будут добавляться фотографии -->
+            <!-- Галерея с изображениями -->
         </div>
         <button class="add-content-btn" onclick="addImage()">Добавить фото</button>
     </div>
@@ -235,10 +231,15 @@
     function addContent(section) {
         const content = prompt("Введите информацию для добавления:");
         if (content) {
-            const sectionElement = document.querySelector(`#${section} .section-content`);
+            const sectionElement = document.getElementById(`${section}-content`);
             const newContent = document.createElement('p');
             newContent.innerText = content;
             sectionElement.appendChild(newContent);
+            
+            // Сохраняем данные в localStorage
+            let sectionData = JSON.parse(localStorage.getItem(section)) || [];
+            sectionData.push(content);
+            localStorage.setItem(section, JSON.stringify(sectionData));
         }
     }
 
@@ -251,10 +252,44 @@
             newImage.src = imageUrl;
             newImage.alt = "New Image";
             gallery.appendChild(newImage);
+
+            // Сохраняем данные в localStorage
+            let imageGallery = JSON.parse(localStorage.getItem("gallery")) || [];
+            imageGallery.push(imageUrl);
+            localStorage.setItem("gallery", JSON.stringify(imageGallery));
         }
     }
+
+    // Загрузка данных из localStorage при загрузке страницы
+    window.onload = function() {
+        const aboutContent = JSON.parse(localStorage.getItem('about')) || [];
+        const dutiesContent = JSON.parse(localStorage.getItem('duties')) || [];
+        const imageGallery = JSON.parse(localStorage.getItem('gallery')) || [];
+
+        // Заполнение разделов
+        aboutContent.forEach(content => {
+            const sectionElement = document.getElementById("about-content");
+            const newContent = document.createElement('p');
+            newContent.innerText = content;
+            sectionElement.appendChild(newContent);
+        });
+
+        dutiesContent.forEach(content => {
+            const sectionElement = document.getElementById("duties-content");
+            const newContent = document.createElement('p');
+            newContent.innerText = content;
+            sectionElement.appendChild(newContent);
+        });
+
+        imageGallery.forEach(url => {
+            const gallery = document.getElementById("image-gallery");
+            const newImage = document.createElement("img");
+            newImage.src = url;
+            newImage.alt = "Image";
+            gallery.appendChild(newImage);
+        });
+    };
 </script>
 
 </body>
 </html>
-
