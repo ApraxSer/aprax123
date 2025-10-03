@@ -3,293 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Советник директора и учитель</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>Личный сайт</title>
     <style>
+        /* Общие стили */
         body {
-            font-family: 'Open Sans', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f5f5f5;
-            color: #333;
+            background-color: #f4f4f4;
+            line-height: 1.6;
         }
 
         header {
-            background-color: #2c3e50;
+            background-color: #333;
+            padding: 1rem;
             color: white;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
             text-align: center;
-            padding: 30px;
-            font-size: 36px;
-            font-weight: 700;
+            margin-top: 10px;
         }
 
-        nav {
-            background-color: #34495e;
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 12px 20px;
-            transition: background-color 0.3s ease;
+        nav ul li {
+            display: inline;
             margin: 0 15px;
         }
 
-        nav a:hover {
-            background-color: #1abc9c;
-        }
-
-        .hero {
-            background-image: url('https://via.placeholder.com/1600x600');
-            background-size: cover;
-            background-position: center;
-            text-align: center;
-            padding: 120px 0;
+        nav ul li a {
             color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
         }
 
-        .hero h2 {
-            font-size: 48px;
+        /* Стиль для профиля */
+        .profile {
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+
+        .profile-image img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .profile-info h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-info p {
+            font-size: 1.2rem;
+        }
+
+        /* Стиль для публикаций */
+        .post-form, .posts-list {
+            padding: 2rem;
+            margin: 20px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-form input, .post-form textarea, .post-form select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .post-form button {
+            background-color: #333;
+            color: white;
+            padding: 12px 15px;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .post-form button:hover {
+            background-color: #555;
+        }
+
+        /* Стили для списка постов */
+        .post {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .post h3 {
+            font-size: 1.8rem;
             margin: 0;
         }
 
-        .hero p {
-            font-size: 22px;
-        }
-
-        .content {
-            margin: 40px auto;
-            max-width: 1100px;
-            padding: 20px;
-        }
-
-        .section-title {
-            font-size: 36px;
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .section-content {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .about p {
-            font-size: 18px;
-            line-height: 1.8;
+        .post p {
+            font-size: 1.2rem;
             color: #555;
         }
 
-        .duties ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .duties ul li {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #555;
-        }
-
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .gallery img {
-            width: 30%;
+        .post img {
+            max-width: 100%;
             height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .gallery img:hover {
-            transform: scale(1.05);
-        }
-
-        .contact-form input, .contact-form textarea {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
             border-radius: 5px;
-            font-size: 16px;
+            margin-top: 10px;
         }
 
-        .contact-form button {
-            background-color: #1abc9c;
+        .post-buttons {
+            margin-top: 10px;
+        }
+
+        .post-buttons button {
+            background-color: #e74c3c;
             color: white;
-            padding: 15px 30px;
-            font-size: 18px;
+            padding: 6px 12px;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-        }
-
-        .contact-form button:hover {
-            background-color: #16a085;
-        }
-
-        .add-content-btn {
-            background-color: #2980b9;
-            color: white;
-            padding: 12px 30px;
-            font-size: 18px;
-            border: none;
             border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .post-buttons button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Стили фильтра */
+        .filter-section {
             margin-top: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .add-content-btn:hover {
-            background-color: #1c6ea4;
-        }
-
-        footer {
-            background-color: #2c3e50;
-            color: white;
             text-align: center;
-            padding: 20px;
         }
+
+        .filter-section select {
+            padding: 10px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
     </style>
 </head>
 <body>
 
-<header>
-    Советник директора и учитель
-</header>
+    <!-- Навигация -->
+    <header>
+        <h1>Личный сайт</h1>
+        <nav>
+            <ul>
+                <li><a href="javascript:void(0)" onclick="showProfilePage()">Главная</a></li>
+                <li><a href="javascript:void(0)" onclick="showPostsPage()">Публикации</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<nav>
-    <a href="#about">О себе</a>
-    <a href="#duties">Мои обязанности</a>
-    <a href="#gallery">Галерея</a>
-    <a href="#contact">Контакты</a>
-</nav>
-
-<div class="hero">
-    <h2>Добро пожаловать на мой сайт!</h2>
-    <p>Здесь я рассказываю о своей работе и делюсь материалами для учеников и коллег.</p>
-</div>
-
-<div class="content" id="about">
-    <h2 class="section-title">О себе</h2>
-    <div class="section-content about" id="about-content">
-        <!-- Контент добавляется через JavaScript -->
-    </div>
-    <button class="add-content-btn" onclick="addContent('about')">Добавить информацию</button>
-</div>
-
-<div class="content" id="duties">
-    <h2 class="section-title">Мои обязанности</h2>
-    <div class="section-content duties" id="duties-content">
-        <!-- Контент добавляется через JavaScript -->
-    </div>
-    <button class="add-content-btn" onclick="addContent('duties')">Добавить обязанности</button>
-</div>
-
-<div class="content" id="gallery">
-    <h2 class="section-title">Галерея</h2>
-    <div class="section-content">
-        <div class="gallery" id="image-gallery">
-            <!-- Галерея с изображениями -->
+    <!-- Страница профиля -->
+    <section id="profilePage" class="profile">
+        <div class="profile-image">
+            <img src="https://via.placeholder.com/150" alt="Фото человека">
         </div>
-        <button class="add-content-btn" onclick="addImage()">Добавить фото</button>
-    </div>
-</div>
+        <div class="profile-info">
+            <h1>Имя Фамилия</h1>
+            <p>Описание о человеке, его достижения, профессиональная информация.</p>
+            <p>Контактные данные:</p>
+            <ul>
+                <li>Email: example@example.com</li>
+                <li>Телефон: +7 999 999 99 99</li>
+                <li>Социальные сети: <a href="https://instagram.com" target="_blank">Instagram</a>, <a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+            </ul>
+        </div>
+    </section>
 
-<div class="content" id="contact">
-    <h2 class="section-title">Контакты</h2>
-    <div class="section-content contact-form">
-        <form>
-            <input type="text" placeholder="Ваше имя" required>
-            <input type="email" placeholder="Ваш email" required>
-            <textarea placeholder="Ваше сообщение" rows="4" required></textarea>
-            <button type="submit">Отправить сообщение</button>
-        </form>
-    </div>
-</div>
+    <!-- Страница публикаций -->
+    <section id="postsPage" style="display: none;">
+        <!-- Фильтрация по категориям -->
+        <div class="filter-section">
+            <label for="categoryFilter">Выберите категорию:</label>
+            <select id="categoryFilter">
+                <option value="all">Все</option>
+                <option value="новости">Новости</option>
+                <option value="события">События</option>
+                <option value="проект">Проект</option>
+            </select>
+        </div>
 
-<footer>
-    <p>&copy; 2025 Иван Иванович — Все права защищены</p>
-</footer>
+        <!-- Форма добавления поста -->
+        <div class="post-form">
+            <h2>Добавить публикацию</h2>
+            <form id="postForm">
+                <label for="title">Заголовок:</label>
+                <input type="text" id="title" name="title" required>
 
-<script>
-    // Функция для добавления контента в разделы
-    function addContent(section) {
-        const content = prompt("Введите информацию для добавления:");
-        if (content) {
-            const sectionElement = document.getElementById(`${section}-content`);
-            const newContent = document.createElement('p');
-            newContent.innerText = content;
-            sectionElement.appendChild(newContent);
-            
-            // Сохраняем данные в localStorage
-            let sectionData = JSON.parse(localStorage.getItem(section)) || [];
-            sectionData.push(content);
-            localStorage.setItem(section, JSON.stringify(sectionData));
+                <label for="content">Содержание:</label>
+                <textarea id="content" name="content" required></textarea>
+
+                <label for="category">Категория:</label>
+                <select id="category" name="category" required>
+                    <option value="новости">Новости</option>
+                    <option value="события">События</option>
+                    <option value="проект">Проект</option>
+                </select>
+
+                <label for="image">Изображение (опционально):</label>
+                <input type="file" id="image" name="image">
+
+                <button type="submit">Добавить пост</button>
+            </form>
+        </div>
+
+        <!-- Список постов -->
+        <div class="posts-list" id="posts"></div>
+    </section>
+
+    <script>
+        // Загрузка постов из LocalStorage
+        function loadPosts() {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const postsContainer = document.getElementById('posts');
+            postsContainer.innerHTML = ''; // Очистка контейнера
+
+            const categoryFilter = document.getElementById('categoryFilter').value;
+
+            posts.forEach(post => {
+                if (categoryFilter === 'all' || post.category === categoryFilter) {
+                    const postElement = document.createElement('div');
+                    postElement.classList.add('post');
+                    postElement.innerHTML = `
+                        <h3>${post.title}</h3>
+                        <p>${post.content}</p>
+                        ${post.image ? `<img src="${post.image}" alt="Изображение поста">` : ''}
+                        <div class="post-buttons">
+                            <button onclick="deletePost(${post.id})">Удалить</button>
+                            <button onclick="editPost(${post.id})">Редактировать</button>
+                        </div>
+                    `;
+                    postsContainer.appendChild(postElement);
+                }
+            });
         }
-    }
 
-    // Функция для добавления изображений в галерею
-    function addImage() {
-        const imageUrl = prompt("Введите URL изображения:");
-        if (imageUrl) {
-            const gallery = document.getElementById("image-gallery");
-            const newImage = document.createElement("img");
-            newImage.src = imageUrl;
-            newImage.alt = "New Image";
-            gallery.appendChild(newImage);
+        // Добавление нового поста
+        document.getElementById('postForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            // Сохраняем данные в localStorage
-            let imageGallery = JSON.parse(localStorage.getItem("gallery")) || [];
-            imageGallery.push(imageUrl);
-            localStorage.setItem("gallery", JSON.stringify(imageGallery));
+            const title = document.getElementById('title').value;
+            const content = document.getElementById('content').value;
+            const category = document.getElementById('category').value;
+            const image = document.getElementById('image').files[0];
+
+            let imageUrl = '';
+            if (image) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    imageUrl = reader.result;
+
+                    // Создание нового поста
+                    const post = {
+                        id: Date.now(),
+                        title,
+                        content,
+                        category,
+                        image: imageUrl
+                    };
+
+                    // Сохранение поста в LocalStorage
+                    const posts = JSON.parse(localStorage.getItem('posts')) || [];
+                    posts.push(post);
+                    localStorage.setItem('posts', JSON.stringify(posts));
+
+                    loadPosts();
+                };
+                reader.readAsDataURL(image);
+            } else {
+                const post = {
+                    id: Date.now(),
+                    title,
+                    content,
+                    category,
+                    image: ''
+                };
+
+                const posts = JSON.parse(localStorage.getItem('posts')) || [];
+                posts.push(post);
+                localStorage.setItem('posts', JSON.stringify(posts));
+
+                loadPosts();
+            }
+
+            // Очистка формы
+            document.getElementById('postForm').reset();
+        });
+
+        // Удаление поста
+        function deletePost(postId) {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const updatedPosts = posts.filter(post => post.id !== postId);
+            localStorage.setItem('posts', JSON.stringify(updatedPosts));
+
+            loadPosts();
         }
-    }
 
-    // Загрузка данных из localStorage при загрузке страницы
-    window.onload = function() {
-        const aboutContent = JSON.parse(localStorage.getItem('about')) || [];
-        const dutiesContent = JSON.parse(localStorage.getItem('duties')) || [];
-        const imageGallery = JSON.parse(localStorage.getItem('gallery')) || [];
+        // Редактирование поста
+        function editPost(postId) {
+            const posts = JSON.parse(localStorage.getItem('posts')) || [];
+            const post = posts.find(p => p.id === postId);
 
-        // Заполнение разделов
-        aboutContent.forEach(content => {
-            const sectionElement = document.getElementById("about-content");
-            const newContent = document.createElement('p');
-            newContent.innerText = content;
-            sectionElement.appendChild(newContent);
-        });
+            document.getElementById('title').value = post.title;
+            document.getElementById('content').value = post.content;
+            document.getElementById('category').value = post.category;
+            document.getElementById('postForm').setAttribute('data-editing', postId);
+        }
 
-        dutiesContent.forEach(content => {
-            const sectionElement = document.getElementById("duties-content");
-            const newContent = document.createElement('p');
-            newContent.innerText = content;
-            sectionElement.appendChild(newContent);
-        });
+        // Переключение на страницу профиля
+        function showProfilePage() {
+            document.getElementById('profilePage').style.display = 'block';
+            document.getElementById('postsPage').style.display = 'none';
+        }
 
-        imageGallery.forEach(url => {
-            const gallery = document.getElementById("image-gallery");
-            const newImage = document.createElement("img");
-            newImage.src = url;
-            newImage.alt = "Image";
-            gallery.appendChild(newImage);
-        });
-    };
-</script>
+        // Переключение на страницу постов
+        function showPostsPage() {
+            document.getElementById('profilePage').style.display = 'none';
+            document.getElementById('postsPage').style.display = 'block';
+            loadPosts();
+        }
 
+        // Инициализация страницы
+        window.onload = function() {
+            showProfilePage();
+        };
+    </script>
 </body>
 </html>
