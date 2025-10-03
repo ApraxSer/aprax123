@@ -1,61 +1,74 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Биографическая страница</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-        section {
-            max-width: 800px;
-            margin: 20px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        h1, h2 {
-            margin-top: 0;
-        }
-        .profile-img {
-            float: right;
-            margin-left: 20px;
-            border-radius: 50%;
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-        }
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #333;
-            color: #fff;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Биографическая страница</h1>
-        <p>Советчик, директор и учитель</p>
-    </header>
-
-    <section>
-        <img src="profile.jpg" alt="Фото" class="profile-img" />
-        <h2>Имя Фамилия</h2>
-        <p><strong>Должность:</strong> Советчик, директор, учитель</p>
-        <p><strong>Образование:</strong> ВУЗ, специальность, год окончания</p>
-        <p><strong>Опыт работы:</strong> Описание опыта, достижений и профессиональных навыков.</p>
-        <h3>Личная информация</h3>
-        <p>Краткая биография, интересы, хобби и
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Биографическая страница</title>
+<!-- Стиль для современного дизайна -->
+<style>
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    background-color: #eef2f3;
+    color: #333;
+  }
+  header {
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 30px 20px;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 2.5em;
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    background-color: #34495e;
+  }
+  nav a {
+    color: #ecf0f1;
+    padding: 15px 20px;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  nav a:hover {
+    background-color: #3b5998;
+  }
+  main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+  }
+  section {
+    background: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  h2 {
+    margin-top: 0;
+    color: #2c3e50;
+  }
+  /* Блок профиля */
+  .profile {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .profile-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 20px;
+    border: 3px solid #2980b9;
+  }
+  .profile-info {
+    flex: 1;
+  }
+  /* Общие стили для блоков */
+  .block {
+    margin-top: 20px;
