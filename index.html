@@ -285,26 +285,28 @@
         <h1>Личный сайт</h1>
         <nav>
             <ul>
-                <li><a href="javascript:void(0)" onclick="showProfilePage()">Главная</a></li>
+                <li><a href="javascript:void(0)" onclick="showProfilePage()">Профиль</a></li>
                 <li><a href="javascript:void(0)" onclick="showPostsPage()">Публикации</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Страница профиля -->
-    <section id="profilePage" class="profile">
-        <div class="profile-image">
-            <img src="https://via.placeholder.com/200" alt="Фото человека">
-        </div>
-        <div class="profile-info">
-            <h1>Имя Фамилия</h1>
-            <p>Описание о человеке, его достижения, профессиональная информация. Здесь можно добавить интересные факты, увлечения и достижения.</p>
-            <p>Контактные данные:</p>
-            <ul>
-                <li>Email: example@example.com</li>
-                <li>Телефон: +7 999 999 99 99</li>
-                <li>Социальные сети: <a href="https://instagram.com" target="_blank">Instagram</a>, <a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
-            </ul>
+    <section id="profilePage">
+        <div class="profile">
+            <div class="profile-image">
+                <img src="profile.jpg" alt="Фото профиля">
+            </div>
+            <div class="profile-info">
+                <h1>Иван Иванов</h1>
+                <p>Привет! Я Иван, разработчик, путешественник, и просто хороший человек. На этом сайте я делюсь своими мыслями, проектами и историями.</p>
+                <p>Контакты:</p>
+                <ul>
+                    <li>Email: ivan@example.com</li>
+                    <li>Телефон: +7 999 999 99 99</li>
+                    <li>Instagram: <a href="https://instagram.com" target="_blank">ivan_instagram</a></li>
+                </ul>
+            </div>
         </div>
     </section>
 
@@ -350,33 +352,28 @@
     </section>
 
     <script>
-        // Загрузка постов из LocalStorage
-        function loadPosts() {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const postsContainer = document.getElementById('posts');
-            postsContainer.innerHTML = ''; // Очистка контейнера
+        let posts = JSON.parse(localStorage.getItem('posts')) || [];
 
+        function loadPosts() {
+            const postsContainer = document.getElementById('posts');
             const categoryFilter = document.getElementById('categoryFilter').value;
+
+            postsContainer.innerHTML = ''; // Очистка контейнера
 
             posts.forEach(post => {
                 if (categoryFilter === 'all' || post.category === categoryFilter) {
                     const postElement = document.createElement('div');
                     postElement.classList.add('post');
                     postElement.innerHTML = `
-                        <h3>${post.title}</h3>
-                        <p>${post.content}</p>
+                        <h3><a href="post.html?id=${post.id}">${post.title}</a></h3>
+                        <p>${post.content.substring(0, 200)}...</p>
                         ${post.image ? `<img src="${post.image}" alt="Изображение поста">` : ''}
-                        <div class="post-buttons">
-                            <button onclick="deletePost(${post.id})">Удалить</button>
-                            <button onclick="editPost(${post.id})">Редактировать</button>
-                        </div>
                     `;
                     postsContainer.appendChild(postElement);
                 }
             });
         }
 
-        // Добавление нового поста
         document.getElementById('postForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -399,7 +396,6 @@
                         image: imageUrl
                     };
 
-                    const posts = JSON.parse(localStorage.getItem('posts')) || [];
                     posts.push(post);
                     localStorage.setItem('posts', JSON.stringify(posts));
 
@@ -415,7 +411,6 @@
                     image: ''
                 };
 
-                const posts = JSON.parse(localStorage.getItem('posts')) || [];
                 posts.push(post);
                 localStorage.setItem('posts', JSON.stringify(posts));
 
@@ -425,37 +420,40 @@
             document.getElementById('postForm').reset();
         });
 
-        // Удаление поста
-        function deletePost(postId) {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const updatedPosts = posts.filter(post => post.id !== postId);
-            localStorage.setItem('posts', JSON.stringify(updatedPosts));
-
-            loadPosts();
-        }
-
-        // Редактирование поста
-        function editPost(postId) {
-            const posts = JSON.parse(localStorage.getItem('posts')) || [];
-            const post = posts.find(p => p.id === postId);
-
-            document.getElementById('title').value = post.title;
-            document.getElementById('content').value = post.content;
-            document.getElementById('category').value = post.category;
-            document.getElementById('postForm').setAttribute('data-editing', postId);
-        }
-
-        // Переключение на страницу профиля
+        // Показ страницы профиля
         function showProfilePage() {
             document.getElementById('profilePage').style.display = 'block';
             document.getElementById('postsPage').style.display = 'none';
         }
 
-        // Переключение на страницу постов
+        // Показ страницы публикаций
         function showPostsPage() {
             document.getElementById('profilePage').style.display = 'none';
             document.getElementById('postsPage').style.display = 'block';
             loadPosts();
+        }
+
+        // Загрузка поста на отдельной странице
+        if (window.location.pathname.includes('post.html')) {
+            const postId = new URLSearchParams(window.location.search).get('id');
+            const post = posts.find(p => p.id == postId);
+
+            if (post) {
+                document.body.innerHTML = `
+                    <header>
+                        <h1>${post.title}</h1>
+                    </header>
+                    <section>
+                        <div class="post">
+                            <h2>${post.title}</h2>
+                            <p>${post.content}</p>
+                            ${post.image ? `<img src="${post.image}" alt="Изображение поста">` : ''}
+                        </div>
+                    </section>
+                `;
+            } else {
+                document.body.innerHTML = `<h2>Пост не найден</h2>`;
+            }
         }
 
         // Инициализация
