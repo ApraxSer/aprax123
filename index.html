@@ -1,74 +1,176 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Биографическая страница</title>
-<!-- Стиль для современного дизайна -->
-<style>
-  body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    margin: 0;
-    background-color: #eef2f3;
-    color: #333;
-  }
-  header {
-    background-color: #2c3e50;
-    color: #fff;
-    padding: 30px 20px;
-    text-align: center;
-  }
-  header h1 {
-    margin: 0;
-    font-size: 2.5em;
-  }
-  nav {
-    display: flex;
-    justify-content: center;
-    background-color: #34495e;
-  }
-  nav a {
-    color: #ecf0f1;
-    padding: 15px 20px;
-    text-decoration: none;
-    transition: background 0.3s;
-  }
-  nav a:hover {
-    background-color: #3b5998;
-  }
-  main {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 20px;
-  }
-  section {
-    background: #fff;
-    margin-bottom: 20px;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  h2 {
-    margin-top: 0;
-    color: #2c3e50;
-  }
-  /* Блок профиля */
-  .profile {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .profile-img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 20px;
-    border: 3px solid #2980b9;
-  }
-  .profile-info {
-    flex: 1;
-  }
-  /* Общие стили для блоков */
-  .block {
-    margin-top: 20px;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Динамический сайт с многими блоками</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f7fb;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #4CAF50;
+      padding: 20px;
+      color: white;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px;
+    }
+
+    .content-block {
+      background-color: #fff;
+      width: 80%;
+      max-width: 800px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-block h2 {
+      margin-bottom: 10px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .content-block p {
+      font-size: 16px;
+      line-height: 1.6;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    .edit-btn:hover {
+      background-color: #45a049;
+    }
+
+    .image-upload {
+      margin-top: 20px;
+    }
+
+    input[type="file"] {
+      padding: 5px;
+    }
+
+    .image-preview {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+
+    .add-block-btn {
+      background-color: #007BFF;
+      color: white;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 5px;
+      margin-top: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .add-block-btn:hover {
+      background-color: #0056b3;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    Динамический сайт с редактируемыми блоками
+  </header>
+
+  <div class="container" id="content-container">
+
+    <!-- Место для динамических блоков -->
+    
+  </div>
+
+  <button class="add-block-btn" onclick="addNewBlock()">Добавить новый блок</button>
+
+  <script>
+    let blockCounter = 0; // Счётчик блоков
+
+    // Функция для редактирования текста
+    function editContent(blockId) {
+      const title = document.getElementById(blockId + '-title');
+      const text = document.getElementById(blockId + '-text');
+
+      const newTitle = prompt("Введите новый заголовок", title.innerText);
+      const newText = prompt("Введите новый текст", text.innerText);
+
+      if (newTitle !== null && newText !== null) {
+        title.innerText = newTitle;
+        text.innerText = newText;
+      }
+    }
+
+    // Функция для загрузки изображения
+    function previewImage(event, blockId) {
+      const preview = document.getElementById(blockId + '-image-preview');
+      const file = event.target.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function() {
+          preview.src = reader.result;
+          preview.style.display = 'block';
+        }
+
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Функция для добавления нового блока
+    function addNewBlock() {
+      blockCounter++; // Увеличиваем счётчик блоков
+
+      const container = document.getElementById('content-container');
+
+      // Создаём новый блок
+      const block = document.createElement('div');
+      block.classList.add('content-block');
+      block.id = 'block' + blockCounter;
+
+      // Вставляем блок в контейнер
+      block.innerHTML = `
+        <h2 id="block${blockCounter}-title" contenteditable="true">Заголовок блока ${blockCounter}</h2>
+        <p id="block${blockCounter}-text" contenteditable="true">Текст для блока ${blockCounter}. Редактируйте этот текст.</p>
+        <button class="edit-btn" onclick="editContent('block${blockCounter}')">Редактировать</button>
+        
+        <div class="image-upload">
+          <h3>Добавить изображение для блока ${blockCounter}</h3>
+          <input type="file" id="block${blockCounter}-image-input" accept="image/*" onchange="previewImage(event, 'block${blockCounter}')">
+          <img id="block${blockCounter}-image-preview" class="image-preview" style="display:none;">
+        </div>
+      `;
+
+      container.appendChild(block);
+    }
+  </script>
+
+</body>
+</html>
